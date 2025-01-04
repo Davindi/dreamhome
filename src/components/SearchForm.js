@@ -21,10 +21,10 @@ const SearchForm = ({ onSearch }) => {
   };
 
   return (
-    <form className="mb-4" onSubmit={handleSubmit}>
+    <form className="my-4 p-5 bg-dark rounded" onSubmit={handleSubmit}>
       <div className="row">
         {/* Property Type */}
-        <div className="col-md-2">
+        <div className="col-md-2 py-2">
           <select
             name="type"
             className="form-select"
@@ -37,7 +37,7 @@ const SearchForm = ({ onSearch }) => {
           </select>
         </div>
         {/* Price */}
-        <div className="col-md-2">
+        <div className="col-md-2 py-2">
           <input
             type="number"
             name="minPrice"
@@ -47,7 +47,7 @@ const SearchForm = ({ onSearch }) => {
             onChange={handleChange}
           />
         </div>
-        <div className="col-md-2">
+        <div className="col-md-2 py-2">
           <input
             type="number"
             name="maxPrice"
@@ -58,7 +58,7 @@ const SearchForm = ({ onSearch }) => {
           />
         </div>
         {/* Bedrooms */}
-        <div className="col-md-2">
+        <div className="col-md-2 py-2">
           <input
             type="number"
             name="minBedrooms"
@@ -68,7 +68,7 @@ const SearchForm = ({ onSearch }) => {
             onChange={handleChange}
           />
         </div>
-        <div className="col-md-2">
+        <div className="col-md-2 py-2">
           <input
             type="number"
             name="maxBedrooms"
@@ -79,7 +79,7 @@ const SearchForm = ({ onSearch }) => {
           />
         </div>
         {/* Date Added */}
-        <div className="col-md-2">
+        <div className="col-md-2 pt-2">
           <input
             type="date"
             name="dateAdded"
@@ -90,8 +90,8 @@ const SearchForm = ({ onSearch }) => {
         </div>
       </div>
       {/* Postcode */}
-      <div className="row mt-3">
-        <div className="col-md-6">
+      <div className="row mt-3 ">
+        <div className="col-md-8 pb-2">
           <input
             type="text"
             name="postcode"
@@ -101,7 +101,7 @@ const SearchForm = ({ onSearch }) => {
             onChange={handleChange}
           />
         </div>
-        <div className="col-md-6">
+        <div className="col-md-4">
           <button type="submit" className="btn btn-primary w-100">
             Search
           </button>

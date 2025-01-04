@@ -5,7 +5,7 @@ import propertiesData from '../data/properties.json';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
-const HomePage = () => {
+const PropertyPage = () => {
   const [filteredProperties, setFilteredProperties] = useState(propertiesData.properties);
   const [favorites, setFavorites] = useState([]);
 
@@ -143,4 +143,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default PropertyPage;
