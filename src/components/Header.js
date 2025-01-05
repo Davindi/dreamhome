@@ -4,7 +4,7 @@ import { FaPhoneAlt, FaEnvelope, FaHome } from 'react-icons/fa';
 import logo from '../../src/assests/img/logo.png';
 const Header = () => {
   return (
-    <Navbar bg="light" expand="lg" className="shadow-sm">
+    <Navbar bg="light" expand="lg" className="shadow-sm ">
       <Container>
         {/* Logo */}
         <Navbar.Brand href="/">

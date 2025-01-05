@@ -5,8 +5,8 @@ import logo from '../../src/assests/img/logo.png';
 export const AboutUs = () => {
   return (
     <>
-    <Header />
-      <section id="about-us" className="py-5 bg-light">
+    <Header  />
+      <section id="about-us" className="py-5 bg-light m-5">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-md-8">

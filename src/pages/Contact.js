@@ -33,9 +33,11 @@ const ContactPage = () => {
   };
 
   return (
-    <section id="contact-us" className=" bg-light">
-      <div className="container">
+    <>
+      <div className="">
         <Header />
+        <section  className="py-5 bg-light m-5">
+        <div className="container">
         <h2 className="my-4 text-center">Contact Us</h2>
         <form onSubmit={handleSubmit} className="mb-4 p-4 bg-white rounded shadow">
           {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
@@ -81,9 +83,11 @@ const ContactPage = () => {
           </div>
           <button type="submit" className="btn btn-secondary w-100">Submit</button>
         </form>
+        </div>
+      </section>
         <Footer />
       </div>
-    </section>
+    </>
   );
 };
 

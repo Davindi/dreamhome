@@ -5,140 +5,124 @@ import propertiesData from '../data/properties.json';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
+import prop1Img from '../assests/img/prop1.jpg';
+import prop2Img from '../assests/img/prop2.jpg';
+import prop3Img from '../assests/img/prop3.jpg';
+import prop4Img from '../assests/img/prop4.jpg';
+import prop5Img from '../assests/img/prop5.jpg';
+import prop6Img from '../assests/img/prop6.jpg';
+import prop7Img from '../assests/img/prop 7.jpg';
+import prop8Img from '../assests/img/prop8.jpg';
+import prop9Img from '../assests/img/prop9.jpg';
+import prop10Img from '../assests/img/prop10.jpg';
+
+const propertyImages = {
+  prop1: prop1Img,
+  prop2: prop2Img,
+  prop3: prop3Img,
+  prop4: prop4Img,
+  prop5: prop5Img,
+  prop6: prop6Img,
+  prop7: prop7Img,
+  prop8: prop8Img,
+  prop9: prop9Img,
+  prop10: prop10Img,
+  
+}
 const HomePage = () => {
   const [filteredProperties, setFilteredProperties] = useState(propertiesData.properties);
-  const [favorites, setFavorites] = useState([]);
+  const [featuredProperties, setFeaturedProperties] = useState([]);
 
-  // Load favorites from localStorage 
+  
   useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    setFavorites(storedFavorites);
+    setFeaturedProperties(filteredProperties.slice(0, 3));
+    
   }, []);
 
-  // Save favorites to localStorage when the list changes
-  useEffect(() => {
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-  }, [favorites]);
-
-  const handleSearch = (criteria) => {
-    const filtered = propertiesData.properties.filter((property) => {
-      return (
-        (!criteria.type || property.type === criteria.type) &&
-        (!criteria.minPrice || property.price >= criteria.minPrice) &&
-        (!criteria.maxPrice || property.price <= criteria.maxPrice) &&
-        (!criteria.minBedrooms || property.bedrooms >= criteria.minBedrooms) &&
-        (!criteria.maxBedrooms || property.bedrooms <= criteria.maxBedrooms) &&
-        (!criteria.dateAdded || new Date(property.added.year, new Date().getMonth(property.added.month), property.added.day) >= new Date(criteria.dateAdded)) &&
-        (!criteria.postcode || property.location.includes(criteria.postcode))
-      );
-    });
-    setFilteredProperties(filtered);
-  };
-
-  const addToFavorites = (property) => {
-    if (!favorites.some((fav) => fav.id === property.id)) {
-      setFavorites([...favorites, property]);
-    }
-  };
-
-  const removeFromFavorites = (propertyId) => {
-    setFavorites(favorites.filter((fav) => fav.id !== propertyId));
-  };
-
-  const clearFavorites = () => {
-    setFavorites([]);
-  };
-
   return (
-    <section id="about-us" className=" bg-light">
-      <div className="container  w-100">
+
+      <>
       <Header />
-      <SearchForm onSearch={handleSearch} />
-      {/* <div className="row p-2">
-        {filteredProperties.map((property) => (
-          <PropertyCard key={property.id} property={property} />
-        ))}
-      </div> */}
-      <div className="d-flex flex-wrap mb-2 p-3 rounded bg-secondary">
-        <div className="col-12 col-md-8"
-        onDrop={(e) => {
-          e.preventDefault();
-          const propertyId = e.dataTransfer.getData('propertyId');
-          const property = favorites.find((fav) => fav.id === propertyId);
-          if (property) {
-            removeFromFavorites(propertyId);
-          }
-        }}
-        onDragOver={(e) => e.preventDefault()}
-        >
-          <div className="row p-2">
-            {filteredProperties.map((property) => (
-              <PropertyCard key={property.id} property={property} onFavorite={(property) => {
-                if (favorites.some((fav) => fav.id === property.id)) {
-                  removeFromFavorites(property.id);
-                } else {
-                  addToFavorites(property);
-                }
-              }}
-              isFavorited={favorites.some((fav) => fav.id === property.id)}/>
+      <section className="hero-section bg-dark text-white text-center py-5 m-5 rounded ">
+        <div className="container ">
+          <h1 className='my-5'>Welcome to Home Dreams</h1>
+          <p>Discover your dream property with ease.</p>
+          <Link to="/properties" className="btn btn-light btn-lg mt-3">Explore Properties</Link>
+        </div>
+      </section>
+
+      <section className="search-section py-5 bg-light">
+        <div className="container">
+          <h2 className="text-center">Search Properties</h2>
+          <p className="text-center">Find the perfect property based on your preferences.</p>
+          <div className="text-center mt-4">
+            <Link to="/properties" className="btn btn-primary btn-lg">
+              Start Searching
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="featured-properties-section py-5">
+        <div className="container">
+          <h2 className="text-center">Featured Properties</h2>
+          <div className="row mt-4">
+            {featuredProperties.map((property) => (
+              <div className="col-md-4" key={property.id}>
+                <div className="card">
+                  <img
+                    src={propertyImages[property.picture]} // Replace with your image path
+                    className="card-img-top"
+                    style={{height:"200px"}}
+                    alt={property.type}
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{property.type}</h5>
+                    <p className="card-text h-50">
+                      Location: {property.location}
+                      <br />
+                      Price: ${property.price.toLocaleString()}
+                    </p>
+                    <Link to={`/${property.url}`} className="btn btn-primary">
+                      View More
+                    </Link>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
-        <div className="col-12 col-md-4 bg-light rounded p-2"
-         onDrop={(e) => {
-          e.preventDefault();
-          const propertyId = e.dataTransfer.getData('propertyId');
-          const property = propertiesData.properties.find((p) => p.id === propertyId);
-          if (property && !favorites.some((fav) => fav.id === property.id)) {
-            addToFavorites(property);
-          }
-        }}
-        onDragOver={(e) => e.preventDefault()}
-        >
-          <h3>Favorites</h3>
-          <div className="list-group">
-    {favorites.map((property) => (
-      <div key={property.id} className="list-group-item"
-      draggable
-                onDragStart={(e) => e.dataTransfer.setData('propertyId', property.id)} 
-      >
-        <div className="d-flex align-items-center">
-          <img
-            src="https://2.bp.blogspot.com/-ZHzJmPA1byA/VZp5e9CiF2I/AAAAAAAAwmo/73_C5bAUyyo/s1600/new-flat-roof-home.jpg"
-            alt={property.type}
-            className="img-thumbnail me-3"
-            style={{ width: "100px", height: "auto" }}
-          />
-          <div>
-            <h5>{property.type}</h5>
-            <p>
-              <strong>Price:</strong> £{property.price} <br />
-              <strong>Location:</strong> {property.location}
-            </p>
-            <Link to={property.url} className="btn btn-sm btn-primary mx-1">
-             View Details
-           </Link>
-            <button
-              className="btn btn-danger btn-sm"
-              onClick={() => removeFromFavorites(property.id)}
-            >
-              Remove
-            </button>
+      </section>
+
+      <section className="search-section py-5 bg-light mx-5 mb-5 rounded">
+        <div className="container">
+          <h2 className="text-center mb-5">Search Properties</h2>
+          <p className="text-center">Find the perfect property based on your preferences.</p>
+          <div className="text-center mt-4">
+            <Link to="/properties" className="btn btn-primary btn-lg">Start Searching</Link>
           </div>
         </div>
-      </div>
-    ))}
-  </div>
-          {favorites.length > 0 && (
-            <button className="btn btn-warning mt-2" onClick={clearFavorites}>
-              Clear Favorites
-            </button>
-          )}
+      </section>
+      <section className="about-section py-5 bg-light mx-5 mb-5 rounded">
+        <div className="container">
+          <h2 className="text-center mb-5">About Home Dreams</h2>
+          <p className="text-center">
+            At Property Finder, we help you find the perfect property to suit your needs. Whether you're looking for a new home, an investment property, or a vacation getaway, our extensive listings and user-friendly interface make it easy to explore your options.
+          </p>
         </div>
-      </div>
+      </section>
+      <section className="contact-section py-5 mx-5 mb-5 rounded ">
+        <div className="container">
+          <h2 className="text-center mb-5">Contact Us</h2>
+          <p className="text-center">Have questions? We're here to help!</p>
+          <div className="text-center mt-4">
+            <Link to="/contact" className="btn btn-primary btn-lg">Get in Touch</Link>
+          </div>
+        </div>
+      </section>
       <Footer />
-    </div>
-    </section>
+    </>
+    
     
   );
 };
