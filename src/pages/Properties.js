@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
+import { FavoritesContext } from '../context/FavoritesContext';
 import SearchForm from '../components/SearchForm';
 import PropertyCard from '../components/PropertyCard';
 import propertiesData from '../data/properties.json';
@@ -7,18 +8,8 @@ import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 const PropertyPage = () => {
   const [filteredProperties, setFilteredProperties] = useState(propertiesData.properties);
-  const [favorites, setFavorites] = useState([]);
-
-  // Load favorites from localStorage 
-  useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    setFavorites(storedFavorites);
-  }, []);
-
-  // Save favorites to localStorage when the list changes
-  useEffect(() => {
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-  }, [favorites]);
+  const { favorites, addToFavorites, removeFromFavorites, clearFavorites } = useContext(FavoritesContext);
+ 
 
   const handleSearch = (criteria) => {
     const filtered = propertiesData.properties.filter((property) => {
@@ -35,19 +26,7 @@ const PropertyPage = () => {
     setFilteredProperties(filtered);
   };
 
-  const addToFavorites = (property) => {
-    if (!favorites.some((fav) => fav.id === property.id)) {
-      setFavorites([...favorites, property]);
-    }
-  };
-
-  const removeFromFavorites = (propertyId) => {
-    setFavorites(favorites.filter((fav) => fav.id !== propertyId));
-  };
-
-  const clearFavorites = () => {
-    setFavorites([]);
-  };
+  
 
   return (
     <>

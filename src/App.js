@@ -1,4 +1,6 @@
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { FavoritesProvider } from './context/FavoritesContext';
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,8 +12,10 @@ import PropertyPage from './pages/Properties';
 
 
 function App() {
+
   return (
-    <BrowserRouter>
+    <FavoritesProvider>
+      <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/properties/:id" element={<PropertyDetails />} />
@@ -20,6 +24,8 @@ function App() {
         <Route path="/properties" element={<PropertyPage />} />
       </Routes>
     </BrowserRouter>
+    </FavoritesProvider>
+    
     
   );
 }
